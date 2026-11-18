@@ -1,5 +1,7 @@
 # 实验方案
 
+> 返回 [公共报告](public_report.md) · [readme](../readme.md)。配套：[测试结论](conclusion.md) · [参考结果](reference_results.md) · [操作手册](../guide.md)
+
 ## 关于 MLA 机制效果的小体量复现探索
 
 单卡 6 GB 显存，64M 级模型，单层基准。目标是复现 MLA 的两项机制性质——KV 缓存压缩比与吸收式推理的时延代价——而不是复现 DeepSeek-V2 的训练配方或最终质量。

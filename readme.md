@@ -1,6 +1,8 @@
 # 关于 MLA 机制效果的小体量复现探索
 
-单卡 6 GB 显存下，用 64M 级模型与单层基准，复现 MLA（Multi-head Latent Attention）的两项机制性质：KV cache 的压缩比，以及吸收式推理相对朴素实现的时延代价。不复现 DeepSeek-V2 的训练配方，困惑度只作同预算下的质量参照。
+单卡 6 GB 显存下，用 64M 级模型与单层基准，检验 MLA（Multi-head Latent Attention）的两项机制性质：KV cache 的压缩比，以及吸收式推理相对朴素实现的时延代价。不复现 DeepSeek-V2 的训练配方，困惑度只作同预算下的质量参照。
+
+不看代码、只想看结论的读者请直接跳转 [公共报告](share/public_report.md)。
 
 ## 项目概述
 
@@ -25,7 +27,7 @@ MHA、GQA、MQA 不是三套结构，而是同一个族的三个取值，统称�
 
 因此代码里没有独立的 MHA 与 MQA 模型文件：`MLATrain/model_gqa.py` 的 `GQAAttention` 与 `GQAModel` 就是这条轴的唯一实现。跑 MHA 用 `--arch mha`（内部把 `n_kv_heads` 设成 8），跑 MQA 在 `build_model` 里把该值设成 1 即可，不需要新增文件；`python MLATrain/train.py --help` 的 `--arch` 说明里也写了这一点。表中 MQA 的参数量按同一公式外推，不是实测。
 
-MLA 不属于这个族。它每头保留独立查询，压缩的不是 KV 组数而是 KV 的维度：每头压成 384 维潜在向量加 48 维解耦 RoPE，每层每 token 432 元素，数量介于 GQA-4 与 MQA 之间，但机制与共享无关。代价是解码时要把 `W_UK` 与 `W_Q` 分别吸收进权重，且该吸收与 QK-Norm 冲突（见 `guide.md`）。
+MLA 不属于这个族。它每头保留独立查询，压缩的不是 KV 组数而是 KV 的维度：每头压成 384 维潜在向量加 48 维解耦 RoPE，每层每 token 432 元素，数量介于 GQA-4 与 MQA 之间，但机制与共享无关。代价是解码时要把 `W_UK` 与 `W_Q` 分别吸收进权重，且该吸收与 QK-Norm 冲突（见 [操作手册](guide.md)）。
 
 ![四种注意力骨架](assets/arch_family.png)
 
@@ -169,10 +171,11 @@ python run_all.py --dry-run             # 只打印将执行的命令
 
 ## 文档
 
-| 文件 | 内容 |
-| --- | --- |
-| `guide.md` | 环境、模型结构、训练参数、换数据、层级基准、出图、故障排查 |
-| `share/experiment_plan.md` | 实验方案 |
-| `share/conclusion.md` | 测试结论 |
-| `share/reference_results.md` | 全部数字与推导 |
-| `data/readme.md`、`models/readme.md`、`dataset-minimind/readme.md` | 三个数据目录的来源与重建方式 |
+详细内容分散在下列文件，点名称直接跳转；各文件顶部都有回到本页与公共报告的链接。
+
+- [公共报告](share/public_report.md) — 对外主文档：综述、实验原理、实验方案、实验结果、结论与修正
+- [实验方案](share/experiment_plan.md) — 立项设计、对照设置与 token 预算
+- [测试结论](share/conclusion.md) — 逐条结论与全部结果表格
+- [参考结果](share/reference_results.md) — 逐条数字、推导与外部对照
+- [操作手册](guide.md) — 环境、模型结构、训练参数、换数据、层级基准、出图、故障排查
+- 三个数据目录的来源与重建方式：[data/](data/readme.md)、[models/](models/readme.md)、[dataset-minimind/](dataset-minimind/readme.md)
