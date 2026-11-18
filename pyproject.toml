@@ -1,0 +1,30 @@
+[project]
+name = "mla-exploration"
+version = "0.1.0"
+description = "MLA 与 MHA 对照实验（机器学习课程项目）"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch==2.14.1",
+    "transformers>=4.56",
+    "datasets>=3.0",
+    "accelerate>=1.0",
+    "safetensors>=0.4",
+    "huggingface_hub>=0.30",
+    "modelscope>=1.20",
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "matplotlib>=3.9",
+    "tqdm>=4.66",
+    "einops>=0.8",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu126" }
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.uv]
+package = false

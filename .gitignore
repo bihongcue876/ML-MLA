@@ -1,0 +1,17 @@
+docs/
+data1/
+archive/
+
+# 大件不入库：由脚本或外部下载重建，见 readme.md
+dataset-minimind/*
+!dataset-minimind/readme.md
+data/tokens/
+data/logs/
+models/*
+!models/readme.md
+
+__pycache__/
+*.pyc
+.venv/
+.uv-cache/
+torchinductor_*/
