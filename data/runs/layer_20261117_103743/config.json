@@ -1,0 +1,27 @@
+{
+  "run_id": "layer_20261117_103743",
+  "kind": "layer_bench",
+  "base": {
+    "d_model": 512,
+    "n_heads": 8,
+    "head_dim": 64,
+    "d_c": 256,
+    "d_rope": 32,
+    "max_len": 2128,
+    "n_layers": 4
+  },
+  "dtype": "torch.bfloat16",
+  "device": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "torch": "2.14.1+cu126",
+  "cuda": "12.6",
+  "gpu_mem_total_mb": 6140.5,
+  "seq_lens": [
+    128,
+    512,
+    2048
+  ],
+  "decode_steps": 64,
+  "warmup": 5,
+  "iters": 20,
+  "argv": "LayerTest/bench.py --decode-steps 64"
+}

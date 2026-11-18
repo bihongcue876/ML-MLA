@@ -1,0 +1,189 @@
+{
+  "a": {
+    "ckpt": "data1/runs/mha_42_20261117_121454/model.pt",
+    "arch": "mha",
+    "mode": "plain",
+    "test_ppl": 8.4975,
+    "prefill": {
+      "median": 16.569,
+      "min": 16.418,
+      "max": 16.646,
+      "values": [
+        16.569,
+        16.646,
+        16.542,
+        16.418,
+        16.603
+      ]
+    },
+    "decode": {
+      "median": 9.921,
+      "min": 9.776,
+      "max": 10.11,
+      "values": [
+        10.11,
+        9.921,
+        10.104,
+        9.776,
+        9.849
+      ]
+    }
+  },
+  "b": {
+    "ckpt": "data1/runs/mla_42_20261117_053931/model.pt",
+    "arch": "mla",
+    "mode": "absorbed",
+    "test_ppl": 9.7535,
+    "prefill": {
+      "median": 21.722,
+      "min": 21.62,
+      "max": 21.865,
+      "values": [
+        21.707,
+        21.722,
+        21.816,
+        21.62,
+        21.865
+      ]
+    },
+    "decode": {
+      "median": 10.382,
+      "min": 9.791,
+      "max": 10.818,
+      "values": [
+        10.818,
+        10.414,
+        10.382,
+        9.904,
+        9.791
+      ]
+    }
+  },
+  "settings": {
+    "seq_len": 512,
+    "samples": 8,
+    "decode_steps": 128,
+    "rounds": 5
+  },
+  "paired_delta": {
+    "decode_med": {
+      "mean": 0.31,
+      "min": -0.058,
+      "max": 0.708,
+      "same_sign": false
+    },
+    "prefill_med": {
+      "mean": 5.19,
+      "min": 5.076,
+      "max": 5.274,
+      "same_sign": true
+    }
+  },
+  "rounds": [
+    {
+      "A": {
+        "prefill_med": 16.569,
+        "decode_med": 10.11,
+        "decode_p10": 9.01,
+        "decode_p90": 12.035,
+        "samples": 1024,
+        "gpu": "2310, 53, 32.82"
+      },
+      "B": {
+        "prefill_med": 21.707,
+        "decode_med": 10.818,
+        "decode_p10": 9.417,
+        "decode_p90": 13.104,
+        "samples": 1024,
+        "gpu": "2310, 53, 24.66"
+      },
+      "round": 1,
+      "delta_decode_med": 0.708,
+      "delta_prefill_med": 5.138
+    },
+    {
+      "B": {
+        "prefill_med": 21.722,
+        "decode_med": 10.414,
+        "decode_p10": 9.236,
+        "decode_p90": 12.755,
+        "samples": 1024,
+        "gpu": "2310, 54, 24.54"
+      },
+      "A": {
+        "prefill_med": 16.646,
+        "decode_med": 9.921,
+        "decode_p10": 8.945,
+        "decode_p90": 11.554,
+        "samples": 1024,
+        "gpu": "2310, 54, 25.47"
+      },
+      "round": 2,
+      "delta_decode_med": 0.493,
+      "delta_prefill_med": 5.076
+    },
+    {
+      "A": {
+        "prefill_med": 16.542,
+        "decode_med": 10.104,
+        "decode_p10": 9.008,
+        "decode_p90": 11.871,
+        "samples": 1024,
+        "gpu": "2310, 54, 25.25"
+      },
+      "B": {
+        "prefill_med": 21.816,
+        "decode_med": 10.382,
+        "decode_p10": 9.154,
+        "decode_p90": 12.599,
+        "samples": 1024,
+        "gpu": "2310, 54, 24.71"
+      },
+      "round": 3,
+      "delta_decode_med": 0.278,
+      "delta_prefill_med": 5.274
+    },
+    {
+      "B": {
+        "prefill_med": 21.62,
+        "decode_med": 9.904,
+        "decode_p10": 8.97,
+        "decode_p90": 11.848,
+        "samples": 1024,
+        "gpu": "2310, 54, 24.42"
+      },
+      "A": {
+        "prefill_med": 16.418,
+        "decode_med": 9.776,
+        "decode_p10": 8.834,
+        "decode_p90": 11.616,
+        "samples": 1024,
+        "gpu": "2310, 54, 26.18"
+      },
+      "round": 4,
+      "delta_decode_med": 0.128,
+      "delta_prefill_med": 5.202
+    },
+    {
+      "A": {
+        "prefill_med": 16.603,
+        "decode_med": 9.849,
+        "decode_p10": 8.897,
+        "decode_p90": 11.499,
+        "samples": 1024,
+        "gpu": "2310, 53, 24.98"
+      },
+      "B": {
+        "prefill_med": 21.865,
+        "decode_med": 9.791,
+        "decode_p10": 8.892,
+        "decode_p90": 11.37,
+        "samples": 1024,
+        "gpu": "2310, 53, 25.02"
+      },
+      "round": 5,
+      "delta_decode_med": -0.058,
+      "delta_prefill_med": 5.262
+    }
+  ]
+}

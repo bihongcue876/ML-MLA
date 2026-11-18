@@ -1,0 +1,49 @@
+{
+  "run_id": "layerctx_20261118_112534",
+  "kind": "layer_ctx",
+  "base": {
+    "d_model": 512,
+    "n_heads": 32,
+    "head_dim": 64,
+    "d_c": 256,
+    "d_rope": 32,
+    "max_len": 2048
+  },
+  "n_layers": 1,
+  "dtype": "torch.bfloat16",
+  "chunk": 1024,
+  "ctx_lens": [
+    16384,
+    32768
+  ],
+  "decode_steps": 24,
+  "rounds": 3,
+  "device": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "torch": "2.10.0+cu126",
+  "gpu_mem_total_mb": 6140.5,
+  "equiv_rel": 3.7403011653095293e-07,
+  "checks": [
+    {
+      "impl": "mha",
+      "out_rel": 4.5870392920091495e-07,
+      "cache_rel": 6.10127496935048e-07,
+      "chunk": 64,
+      "total": 256
+    },
+    {
+      "impl": "naive_mla",
+      "out_rel": 6.643758584415566e-07,
+      "cache_rel": 4.537045637564626e-07,
+      "chunk": 64,
+      "total": 256
+    },
+    {
+      "impl": "absorbed_mla",
+      "out_rel": 6.945744674425768e-07,
+      "cache_rel": 4.537045637564626e-07,
+      "chunk": 64,
+      "total": 256
+    }
+  ],
+  "argv": "LayerTest/bench_ctx.py --n-heads 32 --ctx-lens 16384 32768 --rounds 3 --decode-steps 24"
+}

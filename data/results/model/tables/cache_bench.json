@@ -1,0 +1,811 @@
+{
+  "env": {
+    "gpu": 6140,
+    "torch": "2.10.0+cu126",
+    "device_name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "max_len_override": 4096,
+    "cudnn_deterministic": false
+  },
+  "cache": {
+    "MHA": {
+      "dtype_cast": {
+        "rope_buffers": 16,
+        "rmsnorm_patched": 33
+      },
+      "raw": [
+        {
+          "seq_len": 512,
+          "prefill_ms": 164.623,
+          "cache_elements": 6291456,
+          "cache_bytes": 18874368,
+          "cache_mib": 18.0,
+          "peak_mem_mb": 981.86,
+          "bits_per_element": 24
+        },
+        {
+          "seq_len": 2048,
+          "prefill_ms": 33.297,
+          "cache_elements": 25165824,
+          "cache_bytes": 75497472,
+          "cache_mib": 72.0,
+          "peak_mem_mb": 1062.88,
+          "bits_per_element": 24
+        },
+        {
+          "seq_len": 4096,
+          "prefill_ms": 79.522,
+          "cache_elements": 50331648,
+          "cache_bytes": 150994944,
+          "cache_mib": 144.0,
+          "peak_mem_mb": 1187.39,
+          "bits_per_element": 24
+        }
+      ],
+      "fixed": [
+        {
+          "seq_len": 512,
+          "prefill_ms": 25.319,
+          "cache_elements": 6291456,
+          "cache_bytes": 12582912,
+          "cache_mib": 12.0,
+          "peak_mem_mb": 965.55,
+          "bits_per_element": 16
+        },
+        {
+          "seq_len": 2048,
+          "prefill_ms": 32.089,
+          "cache_elements": 25165824,
+          "cache_bytes": 50331648,
+          "cache_mib": 48.0,
+          "peak_mem_mb": 1034.81,
+          "bits_per_element": 16
+        },
+        {
+          "seq_len": 4096,
+          "prefill_ms": 72.454,
+          "cache_elements": 50331648,
+          "cache_bytes": 100663296,
+          "cache_mib": 96.0,
+          "peak_mem_mb": 1129.2,
+          "bits_per_element": 16
+        }
+      ]
+    },
+    "GQA-4": {
+      "dtype_cast": {
+        "rope_buffers": 16,
+        "rmsnorm_patched": 33
+      },
+      "raw": [
+        {
+          "seq_len": 512,
+          "prefill_ms": 24.415,
+          "cache_elements": 3145728,
+          "cache_bytes": 9437184,
+          "cache_mib": 9.0,
+          "peak_mem_mb": 951.05,
+          "bits_per_element": 24
+        },
+        {
+          "seq_len": 2048,
+          "prefill_ms": 30.405,
+          "cache_elements": 12582912,
+          "cache_bytes": 37748736,
+          "cache_mib": 36.0,
+          "peak_mem_mb": 1010.19,
+          "bits_per_element": 24
+        },
+        {
+          "seq_len": 4096,
+          "prefill_ms": 71.627,
+          "cache_elements": 25165824,
+          "cache_bytes": 75497472,
+          "cache_mib": 72.0,
+          "peak_mem_mb": 1094.83,
+          "bits_per_element": 24
+        }
+      ],
+      "fixed": [
+        {
+          "seq_len": 512,
+          "prefill_ms": 20.076,
+          "cache_elements": 3145728,
+          "cache_bytes": 6291456,
+          "cache_mib": 6.0,
+          "peak_mem_mb": 944.18,
+          "bits_per_element": 16
+        },
+        {
+          "seq_len": 2048,
+          "prefill_ms": 29.789,
+          "cache_elements": 12582912,
+          "cache_bytes": 25165824,
+          "cache_mib": 24.0,
+          "peak_mem_mb": 992.38,
+          "bits_per_element": 16
+        },
+        {
+          "seq_len": 4096,
+          "prefill_ms": 67.341,
+          "cache_elements": 25165824,
+          "cache_bytes": 50331648,
+          "cache_mib": 48.0,
+          "peak_mem_mb": 1066.27,
+          "bits_per_element": 16
+        }
+      ]
+    },
+    "MLA": {
+      "dtype_cast": {
+        "rope_buffers": 16,
+        "rmsnorm_patched": 33
+      },
+      "raw": [
+        {
+          "seq_len": 512,
+          "prefill_ms": 36.897,
+          "cache_elements": 1769472,
+          "cache_bytes": 3932160,
+          "cache_mib": 3.75,
+          "peak_mem_mb": 949.18,
+          "bits_per_element": 17
+        },
+        {
+          "seq_len": 2048,
+          "prefill_ms": 36.26,
+          "cache_elements": 7077888,
+          "cache_bytes": 15728640,
+          "cache_mib": 15.0,
+          "peak_mem_mb": 1002.56,
+          "bits_per_element": 17
+        },
+        {
+          "seq_len": 4096,
+          "prefill_ms": 87.057,
+          "cache_elements": 14155776,
+          "cache_bytes": 31457280,
+          "cache_mib": 30.0,
+          "peak_mem_mb": 1077.77,
+          "bits_per_element": 17
+        }
+      ],
+      "fixed": [
+        {
+          "seq_len": 512,
+          "prefill_ms": 21.502,
+          "cache_elements": 1769472,
+          "cache_bytes": 3538944,
+          "cache_mib": 3.375,
+          "peak_mem_mb": 944.93,
+          "bits_per_element": 16
+        },
+        {
+          "seq_len": 2048,
+          "prefill_ms": 34.955,
+          "cache_elements": 7077888,
+          "cache_bytes": 14155776,
+          "cache_mib": 13.5,
+          "peak_mem_mb": 991.5,
+          "bits_per_element": 16
+        },
+        {
+          "seq_len": 4096,
+          "prefill_ms": 83.746,
+          "cache_elements": 14155776,
+          "cache_bytes": 28311552,
+          "cache_mib": 27.0,
+          "peak_mem_mb": 1053.14,
+          "bits_per_element": 16
+        }
+      ]
+    }
+  },
+  "latency": {
+    "settings": {
+      "seq_len": 512,
+      "samples": 8,
+      "decode_steps": 128,
+      "runs": 30
+    },
+    "configs": {
+      "MHA": {
+        "prefill_ms": {
+          "n": 30,
+          "mean": 16.5521,
+          "std": 2.8607,
+          "median": 15.6552,
+          "ci95": [
+            15.5284,
+            17.5758
+          ]
+        },
+        "decode_ms": {
+          "n": 30,
+          "mean": 17.139,
+          "std": 2.4508,
+          "median": 15.5471,
+          "ci95": [
+            16.262,
+            18.016
+          ]
+        }
+      },
+      "GQA-4": {
+        "prefill_ms": {
+          "n": 30,
+          "mean": 16.54,
+          "std": 2.8228,
+          "median": 15.3179,
+          "ci95": [
+            15.5299,
+            17.5502
+          ]
+        },
+        "decode_ms": {
+          "n": 30,
+          "mean": 16.9971,
+          "std": 2.4615,
+          "median": 15.9221,
+          "ci95": [
+            16.1163,
+            17.878
+          ]
+        }
+      },
+      "MLA": {
+        "prefill_ms": {
+          "n": 30,
+          "mean": 18.5851,
+          "std": 3.7984,
+          "median": 17.5249,
+          "ci95": [
+            17.2259,
+            19.9444
+          ]
+        },
+        "decode_ms": {
+          "n": 30,
+          "mean": 18.9997,
+          "std": 3.0473,
+          "median": 18.0357,
+          "ci95": [
+            17.9093,
+            20.0902
+          ]
+        }
+      }
+    },
+    "rounds": [
+      {
+        "round": 1,
+        "gpu": "2310, 52, 38.16",
+        "MHA": {
+          "prefill_med": 14.943,
+          "decode_med": 16.423
+        },
+        "GQA-4": {
+          "prefill_med": 25.275,
+          "decode_med": 20.91
+        },
+        "MLA": {
+          "prefill_med": 26.392,
+          "decode_med": 25.683
+        }
+      },
+      {
+        "round": 2,
+        "gpu": "2310, 52, 20.63",
+        "MLA": {
+          "prefill_med": 19.229,
+          "decode_med": 20.344
+        },
+        "GQA-4": {
+          "prefill_med": 18.854,
+          "decode_med": 19.154
+        },
+        "MHA": {
+          "prefill_med": 22.07,
+          "decode_med": 20.93
+        }
+      },
+      {
+        "round": 3,
+        "gpu": "2310, 52, 20.59",
+        "MHA": {
+          "prefill_med": 17.793,
+          "decode_med": 20.236
+        },
+        "GQA-4": {
+          "prefill_med": 16.85,
+          "decode_med": 18.111
+        },
+        "MLA": {
+          "prefill_med": 28.886,
+          "decode_med": 25.447
+        }
+      },
+      {
+        "round": 4,
+        "gpu": "2310, 53, 21.86",
+        "MLA": {
+          "prefill_med": 19.937,
+          "decode_med": 21.619
+        },
+        "GQA-4": {
+          "prefill_med": 19.119,
+          "decode_med": 21.83
+        },
+        "MHA": {
+          "prefill_med": 22.221,
+          "decode_med": 21.528
+        }
+      },
+      {
+        "round": 5,
+        "gpu": "2310, 53, 20.57",
+        "MHA": {
+          "prefill_med": 22.726,
+          "decode_med": 21.911
+        },
+        "GQA-4": {
+          "prefill_med": 20.683,
+          "decode_med": 21.562
+        },
+        "MLA": {
+          "prefill_med": 26.201,
+          "decode_med": 23.793
+        }
+      },
+      {
+        "round": 6,
+        "gpu": "2310, 53, 21.92",
+        "MLA": {
+          "prefill_med": 26.643,
+          "decode_med": 26.104
+        },
+        "GQA-4": {
+          "prefill_med": 23.778,
+          "decode_med": 20.761
+        },
+        "MHA": {
+          "prefill_med": 23.512,
+          "decode_med": 21.108
+        }
+      },
+      {
+        "round": 7,
+        "gpu": "2310, 53, 20.84",
+        "MHA": {
+          "prefill_med": 19.117,
+          "decode_med": 18.84
+        },
+        "GQA-4": {
+          "prefill_med": 18.221,
+          "decode_med": 18.777
+        },
+        "MLA": {
+          "prefill_med": 19.424,
+          "decode_med": 18.489
+        }
+      },
+      {
+        "round": 8,
+        "gpu": "2310, 52, 22.65",
+        "MLA": {
+          "prefill_med": 18.293,
+          "decode_med": 18.116
+        },
+        "GQA-4": {
+          "prefill_med": 16.179,
+          "decode_med": 15.495
+        },
+        "MHA": {
+          "prefill_med": 14.775,
+          "decode_med": 15.01
+        }
+      },
+      {
+        "round": 9,
+        "gpu": "2310, 53, 22.50",
+        "MHA": {
+          "prefill_med": 15.461,
+          "decode_med": 19.707
+        },
+        "GQA-4": {
+          "prefill_med": 18.662,
+          "decode_med": 19.946
+        },
+        "MLA": {
+          "prefill_med": 17.95,
+          "decode_med": 17.966
+        }
+      },
+      {
+        "round": 10,
+        "gpu": "2310, 52, 23.10",
+        "MLA": {
+          "prefill_med": 16.122,
+          "decode_med": 17.617
+        },
+        "GQA-4": {
+          "prefill_med": 14.259,
+          "decode_med": 14.753
+        },
+        "MHA": {
+          "prefill_med": 13.909,
+          "decode_med": 15.508
+        }
+      },
+      {
+        "round": 11,
+        "gpu": "2310, 53, 22.11",
+        "MHA": {
+          "prefill_med": 16.839,
+          "decode_med": 15.21
+        },
+        "GQA-4": {
+          "prefill_med": 14.578,
+          "decode_med": 16.886
+        },
+        "MLA": {
+          "prefill_med": 21.811,
+          "decode_med": 21.191
+        }
+      },
+      {
+        "round": 12,
+        "gpu": "2310, 52, 23.21",
+        "MLA": {
+          "prefill_med": 16.668,
+          "decode_med": 17.541
+        },
+        "GQA-4": {
+          "prefill_med": 16.208,
+          "decode_med": 16.548
+        },
+        "MHA": {
+          "prefill_med": 14.087,
+          "decode_med": 15.258
+        }
+      },
+      {
+        "round": 13,
+        "gpu": "2310, 53, 22.20",
+        "MHA": {
+          "prefill_med": 14.337,
+          "decode_med": 15.548
+        },
+        "GQA-4": {
+          "prefill_med": 14.074,
+          "decode_med": 16.113
+        },
+        "MLA": {
+          "prefill_med": 15.566,
+          "decode_med": 16.681
+        }
+      },
+      {
+        "round": 14,
+        "gpu": "2310, 53, 23.72",
+        "MLA": {
+          "prefill_med": 15.649,
+          "decode_med": 16.071
+        },
+        "GQA-4": {
+          "prefill_med": 14.349,
+          "decode_med": 14.578
+        },
+        "MHA": {
+          "prefill_med": 14.3,
+          "decode_med": 15.066
+        }
+      },
+      {
+        "round": 15,
+        "gpu": "2310, 52, 22.97",
+        "MHA": {
+          "prefill_med": 14.175,
+          "decode_med": 14.4
+        },
+        "GQA-4": {
+          "prefill_med": 15.759,
+          "decode_med": 14.719
+        },
+        "MLA": {
+          "prefill_med": 18.622,
+          "decode_med": 20.647
+        }
+      },
+      {
+        "round": 16,
+        "gpu": "2310, 53, 22.03",
+        "MLA": {
+          "prefill_med": 17.483,
+          "decode_med": 20.002
+        },
+        "GQA-4": {
+          "prefill_med": 14.391,
+          "decode_med": 15.49
+        },
+        "MHA": {
+          "prefill_med": 15.569,
+          "decode_med": 15.403
+        }
+      },
+      {
+        "round": 17,
+        "gpu": "2310, 52, 22.47",
+        "MHA": {
+          "prefill_med": 15.711,
+          "decode_med": 15.498
+        },
+        "GQA-4": {
+          "prefill_med": 13.946,
+          "decode_med": 15.072
+        },
+        "MLA": {
+          "prefill_med": 16.234,
+          "decode_med": 16.866
+        }
+      },
+      {
+        "round": 18,
+        "gpu": "2310, 53, 23.16",
+        "MLA": {
+          "prefill_med": 15.792,
+          "decode_med": 17.137
+        },
+        "GQA-4": {
+          "prefill_med": 19.164,
+          "decode_med": 21.267
+        },
+        "MHA": {
+          "prefill_med": 15.783,
+          "decode_med": 19.469
+        }
+      },
+      {
+        "round": 19,
+        "gpu": "2310, 53, 21.82",
+        "MHA": {
+          "prefill_med": 17.179,
+          "decode_med": 16.581
+        },
+        "GQA-4": {
+          "prefill_med": 16.584,
+          "decode_med": 17.126
+        },
+        "MLA": {
+          "prefill_med": 16.753,
+          "decode_med": 16.916
+        }
+      },
+      {
+        "round": 20,
+        "gpu": "2310, 52, 23.03",
+        "MLA": {
+          "prefill_med": 15.566,
+          "decode_med": 16.918
+        },
+        "GQA-4": {
+          "prefill_med": 15.301,
+          "decode_med": 14.893
+        },
+        "MHA": {
+          "prefill_med": 15.792,
+          "decode_med": 19.834
+        }
+      },
+      {
+        "round": 21,
+        "gpu": "2310, 53, 20.51",
+        "MHA": {
+          "prefill_med": 20.425,
+          "decode_med": 18.583
+        },
+        "GQA-4": {
+          "prefill_med": 15.335,
+          "decode_med": 14.949
+        },
+        "MLA": {
+          "prefill_med": 15.966,
+          "decode_med": 17.034
+        }
+      },
+      {
+        "round": 22,
+        "gpu": "2310, 53, 23.49",
+        "MLA": {
+          "prefill_med": 17.809,
+          "decode_med": 18.106
+        },
+        "GQA-4": {
+          "prefill_med": 15.282,
+          "decode_med": 15.138
+        },
+        "MHA": {
+          "prefill_med": 16.249,
+          "decode_med": 15.416
+        }
+      },
+      {
+        "round": 23,
+        "gpu": "2310, 52, 22.58",
+        "MHA": {
+          "prefill_med": 14.212,
+          "decode_med": 15.195
+        },
+        "GQA-4": {
+          "prefill_med": 15.005,
+          "decode_med": 14.561
+        },
+        "MLA": {
+          "prefill_med": 15.372,
+          "decode_med": 15.85
+        }
+      },
+      {
+        "round": 24,
+        "gpu": "2310, 53, 23.86",
+        "MLA": {
+          "prefill_med": 15.345,
+          "decode_med": 15.777
+        },
+        "GQA-4": {
+          "prefill_med": 14.806,
+          "decode_med": 14.273
+        },
+        "MHA": {
+          "prefill_med": 14.746,
+          "decode_med": 14.972
+        }
+      },
+      {
+        "round": 25,
+        "gpu": "2310, 52, 20.36",
+        "MHA": {
+          "prefill_med": 14.177,
+          "decode_med": 17.888
+        },
+        "GQA-4": {
+          "prefill_med": 15.022,
+          "decode_med": 15.731
+        },
+        "MLA": {
+          "prefill_med": 15.6,
+          "decode_med": 16.896
+        }
+      },
+      {
+        "round": 26,
+        "gpu": "2310, 52, 23.26",
+        "MLA": {
+          "prefill_med": 16.038,
+          "decode_med": 16.009
+        },
+        "GQA-4": {
+          "prefill_med": 15.127,
+          "decode_med": 15.553
+        },
+        "MHA": {
+          "prefill_med": 15.039,
+          "decode_med": 15.024
+        }
+      },
+      {
+        "round": 27,
+        "gpu": "2310, 53, 22.84",
+        "MHA": {
+          "prefill_med": 15.645,
+          "decode_med": 15.546
+        },
+        "GQA-4": {
+          "prefill_med": 15.347,
+          "decode_med": 18.772
+        },
+        "MLA": {
+          "prefill_med": 21.129,
+          "decode_med": 21.776
+        }
+      },
+      {
+        "round": 28,
+        "gpu": "2310, 52, 21.55",
+        "MLA": {
+          "prefill_med": 17.795,
+          "decode_med": 19.074
+        },
+        "GQA-4": {
+          "prefill_med": 13.978,
+          "decode_med": 15.132
+        },
+        "MHA": {
+          "prefill_med": 16.333,
+          "decode_med": 14.945
+        }
+      },
+      {
+        "round": 29,
+        "gpu": "2310, 53, 22.67",
+        "MHA": {
+          "prefill_med": 13.773,
+          "decode_med": 14.522
+        },
+        "GQA-4": {
+          "prefill_med": 15.02,
+          "decode_med": 14.765
+        },
+        "MLA": {
+          "prefill_med": 15.713,
+          "decode_med": 15.976
+        }
+      },
+      {
+        "round": 30,
+        "gpu": "2310, 52, 23.67",
+        "MLA": {
+          "prefill_med": 17.567,
+          "decode_med": 18.346
+        },
+        "GQA-4": {
+          "prefill_med": 15.045,
+          "decode_med": 17.05
+        },
+        "MHA": {
+          "prefill_med": 15.665,
+          "decode_med": 18.611
+        }
+      }
+    ],
+    "delta_vs_mha": {
+      "GQA-4": {
+        "decode_ms": {
+          "n": 30,
+          "mean": -0.1419,
+          "std": 1.7975,
+          "median": 0.0117,
+          "ci95": [
+            -0.7851,
+            0.5014
+          ]
+        },
+        "prefill_ms": {
+          "n": 30,
+          "mean": -0.012,
+          "std": 2.6876,
+          "median": -0.2806,
+          "ci95": [
+            -0.9738,
+            0.9497
+          ]
+        },
+        "decode_pct": -0.83,
+        "prefill_pct": -0.07
+      },
+      "MLA": {
+        "decode_ms": {
+          "n": 30,
+          "mean": 1.8607,
+          "std": 2.908,
+          "median": 1.2505,
+          "ci95": [
+            0.8201,
+            2.9013
+          ]
+        },
+        "prefill_ms": {
+          "n": 30,
+          "mean": 2.033,
+          "std": 3.2915,
+          "median": 1.511,
+          "ci95": [
+            0.8552,
+            3.2109
+          ]
+        },
+        "decode_pct": 10.86,
+        "prefill_pct": 12.28
+      }
+    }
+  }
+}

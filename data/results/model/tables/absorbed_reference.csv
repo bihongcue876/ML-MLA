@@ -1,0 +1,5 @@
+run_id,arch,mode,seed,seq_len,test_ppl,first_token_ms,per_token_ms,peak_mem_mb,throughput_tok_s,final_val_ppl,note
+mla_42_20261117_053931,MLA plain,absorbed,42,512,9.7535,20.579,10.384,324.23,801.1,10.5707,weights deleted 2026-11-18
+mla_42_20261117_053931,MLA plain,absorbed,42,512,9.7535,19.074,9.783,324.23,854.2,10.5707,weights deleted 2026-11-18
+mla_43_20261117_080418,MLA plain,absorbed,43,512,9.6315,19.978,9.971,324.23,844.1,10.4115,weights deleted 2026-11-18
+mla_43_20261117_080418,MLA plain,absorbed,43,512,9.6315,19.058,10.452,324.23,783.4,10.4115,weights deleted 2026-11-18

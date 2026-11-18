@@ -1,0 +1,49 @@
+{
+  "run_id": "mla_42_20261117_053931",
+  "arch": "mla",
+  "seed": 42,
+  "model": {
+    "arch": "mla",
+    "vocab_size": 6400,
+    "d_model": 768,
+    "n_layers": 8,
+    "n_heads": 8,
+    "head_dim": 96,
+    "d_c": 384,
+    "d_rope": 48,
+    "hidden": 2432,
+    "max_len": 640,
+    "theta": 1000000.0,
+    "tie": true,
+    "use_qk_norm": false,
+    "eps": 1e-06
+  },
+  "params": 68924160,
+  "train": {
+    "tokens": 149995520,
+    "steps": 18310,
+    "seq_len": 512,
+    "batch": 8,
+    "grad_accum": 2,
+    "lr": 0.001,
+    "warmup": 500,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "grad_checkpoint": true,
+    "tokens_per_step": 8192
+  },
+  "data": {
+    "dir": "/mnt/d/Projects/MachineLearningTeamWork/data1/tokens",
+    "train_tokens": 150000000,
+    "val_tokens": 1000000,
+    "vocab_size": 6400
+  },
+  "env": {
+    "device": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "gpu_mem_total_mb": 6140.5,
+    "torch": "2.14.1+cu126",
+    "cuda": "12.6",
+    "dtype": "bfloat16"
+  },
+  "argv": "MLATrain/train.py --arch mla --seed 42 --tokens 150000000 --seq-len 512 --batch 8 --grad-accum 2 --grad-checkpoint"
+}

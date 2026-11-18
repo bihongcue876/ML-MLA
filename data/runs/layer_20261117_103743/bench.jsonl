@@ -1,0 +1,13 @@
+{"kind": "verify", "relative_error": 4.134049779471411e-07}
+{"kind": "bench", "impl": "mha", "phase": "prefill", "seq_len": 128, "batch": 1, "latency_ms": 1.8811, "peak_mem_mb": 18.79, "cache_theoretical": 1048576, "cache_measured": null, "params": 4194304}
+{"kind": "bench", "impl": "mha", "phase": "prefill", "seq_len": 512, "batch": 1, "latency_ms": 1.7674, "peak_mem_mb": 23.66, "cache_theoretical": 4194304, "cache_measured": null, "params": 4194304}
+{"kind": "bench", "impl": "mha", "phase": "prefill", "seq_len": 2048, "batch": 1, "latency_ms": 3.2512, "peak_mem_mb": 43.16, "cache_theoretical": 16777216, "cache_measured": null, "params": 4194304}
+{"kind": "bench", "impl": "mha", "phase": "decode", "seq_len": 2112, "batch": 1, "latency_ms": 1.8637, "peak_mem_mb": 52.17, "cache_theoretical": 17301504, "cache_measured": 17301504, "params": 4194304}
+{"kind": "bench", "impl": "naive_mla", "phase": "prefill", "seq_len": 128, "batch": 1, "latency_ms": 2.3479, "peak_mem_mb": 18.36, "cache_theoretical": 294912, "cache_measured": null, "params": 4259840}
+{"kind": "bench", "impl": "naive_mla", "phase": "prefill", "seq_len": 512, "batch": 1, "latency_ms": 2.433, "peak_mem_mb": 23.14, "cache_theoretical": 1179648, "cache_measured": null, "params": 4259840}
+{"kind": "bench", "impl": "naive_mla", "phase": "prefill", "seq_len": 2048, "batch": 1, "latency_ms": 4.0612, "peak_mem_mb": 43.14, "cache_theoretical": 4718592, "cache_measured": null, "params": 4259840}
+{"kind": "bench", "impl": "naive_mla", "phase": "decode", "seq_len": 2112, "batch": 1, "latency_ms": 2.4463, "peak_mem_mb": 37.93, "cache_theoretical": 4866048, "cache_measured": 4866048, "params": 4259840}
+{"kind": "bench", "impl": "absorbed_mla", "phase": "prefill", "seq_len": 128, "batch": 1, "latency_ms": 3.7286, "peak_mem_mb": 20.61, "cache_theoretical": 294912, "cache_measured": null, "params": 4259840}
+{"kind": "bench", "impl": "absorbed_mla", "phase": "prefill", "seq_len": 512, "batch": 1, "latency_ms": 3.3619, "peak_mem_mb": 32.15, "cache_theoretical": 1179648, "cache_measured": null, "params": 4259840}
+{"kind": "bench", "impl": "absorbed_mla", "phase": "prefill", "seq_len": 2048, "batch": 1, "latency_ms": 9.3235, "peak_mem_mb": 78.27, "cache_theoretical": 4718592, "cache_measured": null, "params": 4259840}
+{"kind": "bench", "impl": "absorbed_mla", "phase": "decode", "seq_len": 2112, "batch": 1, "latency_ms": 3.1967, "peak_mem_mb": 40.01, "cache_theoretical": 4866048, "cache_measured": 4866048, "params": 4259840}
