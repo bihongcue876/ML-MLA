@@ -1,0 +1,5 @@
+﻿arch,phase,rounds,mean_paired_delta_ms,ci95_low_ms,ci95_high_ms,pct_of_mha_mean,source
+GQA-4,decode,30,-0.14183333333333342,-0.7850903255561346,0.5014236588894676,-0.8275473092556942,data/results/model/tables/cache_bench.json#latency.rounds
+GQA-4,prefill,30,-0.01206666666666667,-0.973828716614924,0.9496953832815906,-0.0729011223147919,data/results/model/tables/cache_bench.json#latency.rounds
+MLA,decode,30,1.8607333333333334,0.820141281708374,2.9013253849582927,10.856720539899255,data/results/model/tables/cache_bench.json#latency.rounds
+MLA,prefill,30,2.033066666666667,0.8552700509403752,3.2108632823929586,12.2828321884635,data/results/model/tables/cache_bench.json#latency.rounds

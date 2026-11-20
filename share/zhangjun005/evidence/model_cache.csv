@@ -1,0 +1,7 @@
+﻿arch,mode,seq_len,layers,batch,elements_per_token_per_layer,cache_mib,bytes,source
+MHA,raw,512,8,1,1536,18.0,18874368,data/results/model/tables/cache_bench.json
+MHA,fixed,512,8,1,1536,12.0,12582912,data/results/model/tables/cache_bench.json
+GQA-4,raw,512,8,1,768,9.0,9437184,data/results/model/tables/cache_bench.json
+GQA-4,fixed,512,8,1,768,6.0,6291456,data/results/model/tables/cache_bench.json
+MLA,raw,512,8,1,432,3.75,3932160,data/results/model/tables/cache_bench.json
+MLA,fixed,512,8,1,432,3.375,3538944,data/results/model/tables/cache_bench.json

@@ -1,0 +1,54 @@
+{
+  "status": "passed-with-warnings",
+  "slide_count": 29,
+  "speaker_notes": 29,
+  "office_math_objects": 3,
+  "author_metadata": "empty",
+  "personal_credit_on_slides_or_notes": false,
+  "external_repo_framing_in_slides_or_notes": false,
+  "experiments_rerun": false,
+  "svg_quality": "0 errors; 2 pages with advisory paragraph warnings",
+  "visual_preview": "All 29 SVG pages reviewed; Edge preview only; no PowerPoint/WPS rendering",
+  "measurement_correction": "Same weights/input only for small FP32 check; timing initializes instances and random input independently",
+  "paper_source": "https://arxiv.org/html/2405.04434v5",
+  "checked_utc": "2026-11-20T09:52:49.151106+00:00",
+  "files": {
+    "MLA课程汇报_v4.pptx": {
+      "bytes": 159085,
+      "sha256": "6cf150d5e039e005e1e1c80ec197ace024e7573329c7f199395febb366b5fdc9"
+    },
+    "MLA课程汇报_v4_总览.png": {
+      "bytes": 2332984,
+      "sha256": "703fe8a4ff0c1df63cea36f596c45d9fbc831cb35346e9849004d61bfe2bbdec"
+    },
+    "MLA课程汇报_v4_讲者备注.md": {
+      "bytes": 29432,
+      "sha256": "28814bd21623c2f27553caa28959149ceb73afc48a99a204cfa95149a3d7e15c"
+    },
+    "MLA课程汇报_v4_资料来源.md": {
+      "bytes": 5404,
+      "sha256": "cc8617725babf3b09502cdfead4cfa32a7b503bfbaaecf7709d1a7d67d506562"
+    },
+    "MLA课程汇报_v4_预览.pdf": {
+      "bytes": 4169081,
+      "sha256": "1916ebfcf587e92b7d262eb2b01472c225c9f56269e4a4e35c184f5fbd7f63b5"
+    },
+    "README.md": {
+      "bytes": 2846,
+      "sha256": "2d1c3d01f377812391ad4d381c23c79dbf9c504e86bc9d32699003ca0f2f8349"
+    }
+  },
+  "pr_cleanup": {
+    "old_deck_versions_in_share": false,
+    "duplicate_source_zip": false,
+    "source_directory": "source",
+    "script_regeneration": "29 slide objects and 29 speaker-note XML parts identical to approved v4",
+    "scope": "share/zhangjun005 only"
+  },
+  "source_scripts": {
+    "author_slides.py": "e340302f8f0097da08a24085ad0e05717952a7091a861b6bf2df90b5448b3514",
+    "build.py": "44424af1eb2fe7b5bcaf36ec6639ccac0e982b0cce6b5d356109c542590d3be2",
+    "drawing_utils.py": "c0ef167dde2ed66d47284e2af39f8e547da453251101bcc9416487d035bb72f4",
+    "render_preview.py": "b151ed8123e8be916f8cc6917e67f956ba3d3b4cd2c27688839730b5d1aeb553"
+  }
+}

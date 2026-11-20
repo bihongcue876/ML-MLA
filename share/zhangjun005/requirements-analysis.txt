@@ -1,0 +1,2 @@
+# Offline analysis dependencies; no torch or model assets needed.
+matplotlib>=3.8,<4
