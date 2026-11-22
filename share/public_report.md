@@ -10,7 +10,7 @@
 
 ## 一、综述
 
-MLA（Multi-head Latent Attention）自 DeepSeek-V2 提出后，被广泛引用为「压缩 KV cache 且不损失性能」的注意力方案，其参数效率与推理加速在多个公开工作中被复述。这些结论各有成立条件，但条件常被省略：压缩比对应的是 MHA 基线而非 GQA 基线；推理加速对应的是批量服务下的 decode 阶段，而非单请求端到端；吸收式实现（absorbed）相对朴素实现（naive）的优势，取决于潜向量维度与上下文长度。
+MLA（Multi-head Latent Attention）自 DeepSeek-V2 提出后[1]，被广泛引用为「压缩 KV cache 且不损失性能」的注意力方案，其参数效率与推理加速在多个公开工作中被复述[2][3]。这些结论各有成立条件，但条件常被省略：压缩比对应的是 MHA 基线而非 GQA 基线；推理加速对应的是批量服务下的 decode 阶段，而非单请求端到端；吸收式实现（absorbed）相对朴素实现（naive）的优势，取决于潜向量维度与上下文长度。
 
 本项目以可完全重现的规模检验其中两条：缓存压缩比，以及吸收相对朴素的时延代价。两条都在模型级与单层基准两处独立测量。
 
@@ -29,7 +29,7 @@ MLA（Multi-head Latent Attention）自 DeepSeek-V2 提出后，被广泛引用�
 
 自回归推理的瓶颈之一是 KV cache 的显存占用与访存量。标准多头注意力（MHA）每 token 每层缓存全部键与值，元素数为 `2 · n_h · d_h`，其中 `n_h` 为注意力头数、`d_h` 为单头维度。该量随上下文长度线性增长，在长上下文与大批量下成为主要开销。
 
-降低这一开销有两条思路：减少 KV 的头数（GQA、MQA），或压缩 KV 的维度（MLA）。前者在头维度上做共享，后者改变缓存的内容本身。本节的推导只保留与后续测量直接相关的部分，注意力机制的入门内容不再展开。
+降低这一开销有两条思路：减少 KV 的头数（GQA[4]、MQA[5]），或压缩 KV 的维度（MLA[1]）。前者在头维度上做共享，后者改变缓存的内容本身。本节的推导只保留与后续测量直接相关的部分，注意力机制的入门内容不再展开。
 
 ### 2.2 MLA 及其工作原理
 
@@ -48,7 +48,7 @@ cache = { c_t, k_t^R }            # 每个 token 只存这两项
 
 推理时缓存元素数为 `d_c + d_rope`，与头数无关。本项目取 `d_c=384`、`d_rope=48`，得 432；MHA 在同样配置下为 1536。压缩比 3.556× 完全由该公式给出，实测只验证实现未偏离公式。
 
-解耦 RoPE 是吸收成立的前提。若对内容键直接施加位置编码，`W_UK` 会与位置相关矩阵耦合，吸收不再成立，且每个前缀 token 的键都需重算。
+解耦 RoPE[7] 是吸收成立的前提。若对内容键直接施加位置编码，`W_UK` 会与位置相关矩阵耦合，吸收不再成立，且每个前缀 token 的键都需重算。
 
 ### 2.3 吸收 MLA 与朴素 MLA
 
@@ -58,7 +58,7 @@ cache = { c_t, k_t^R }            # 每个 token 只存这两项
 
 吸收实现把 `W_UK` 并入查询侧投影、把 `W_UV` 并入输出侧投影，使每步只需在 `d_c` 维空间内完成一次乘加，不必显式构造 `n_h · d_h` 维的键值。代价是查询维度被抬高到 `n_h · (d_h + d_rope)`，且该变换只在 decode 阶段有利：prefill 需要先做一次完整展开，展开与注意力的中间量同时驻留。
 
-吸收与 QK-Norm 冲突。若对键施加逐头归一化，归一化的均方根依赖每个键自身，无法并入 `W_UK` 的线性变换，吸收路径即被封死。本项目 MLA 主组按论文结构启用 QK-Norm，因此模型级推理只能走朴素路径；吸收的相对代价在层级基准中单独测量。
+吸收与 QK-Norm 冲突。若对键施加逐头归一化，归一化的均方根依赖每个键自身，无法并入 `W_UK` 的线性变换，吸收路径即被封死。本项目的 `q_norm`、`k_norm` 沿用对照组骨架的逐头 RMSNorm，DeepSeek-V2 的 MLA 结构本身不含这一项；在 MLA 组也开启，是为了让三个方案只差注意力结构。代价是模型级推理只能走朴素路径，吸收的相对代价改在层级基准中单独测量。
 
 ## 三、实验方案
 
@@ -178,10 +178,42 @@ MLA 的每 token 延迟为 MHA 的 2.1–2.4 倍。差距不来自缓存体积�
 1. 时延固定 batch 1。吸收的真实价值在批量服务下的缓存密度与吞吐，本轮未测，因此不能据此判定吸收无价值。
 2. 上下文上限 32K。更长需要更多显存或更激进的分块，未验证。
 3. 规模只到 64M 级、1.5 亿 token。困惑度差异在该规模下稳定，但不能外推到更大模型。
-4. 查询侧缺少论文的低秩分支（`W^DQ` 后接 `W^UQ`），本项目查询侧为满秩投影，参数量与原始结构不完全对齐。该缺失不作用于 KV 侧，不影响吸收路径的时延测量。
+4. 查询侧缺少论文的低秩分支（`W^DQ` 后接 `W^UQ`）[1]，本项目查询侧为满秩投影，参数量与原始结构不完全对齐。该缺失不作用于 KV 侧，不影响吸收路径的时延测量。
 5. 单机单卡，seed 只有两个，统计功效有限；两配置差值小于 seed 极差时一律记为未观测到显著差异。
 6. 时钟未锁定，绝对毫秒数跨时段不可比，所有架构间比较只用配对差值。
 
 后续可补的工作有三项：批量大于 1 的吞吐测量，把吸收的收益放回它本来的成立条件；超过 32K 的长上下文与分块策略；在锁频环境下重测时延以缩小置信区间。
 
 复现入口：`python run_all.py --dry-run` 打印全部命令，`python run_all.py` 依次执行检查、切分、训练、评测、层级基准、汇总与出图。环境、目录约定与故障排查见仓库根目录的 `readme.md` 与 `guide.md`，逐条数字与推导见 [reference_results.md](reference_results.md)，测试结论明细见 [conclusion.md](conclusion.md)，实验设计见 [experiment_plan.md](experiment_plan.md)。
+
+## 参考文献
+
+**[1]** DeepSeek-AI. DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model[EB/OL]. arXiv:2405.04434, 2024. <https://arxiv.org/abs/2405.04434>
+
+MLA 原始出处。摘要的 93.3%、5.76×、42.5% 三项均以稠密模型 DeepSeek 67B 为基线，未给 batch 与上下文条件；结构取 `d_c=4d_h`、`d_h^R=d_h/2`，`d_h=128` 时即 512 与 64；吸收式推理见 §2.1.2，原文为「`W^UK` 可并入 `W^Q`、`W^UV` 可并入 `W^O`，因而无需显式计算 K、V」。该结构不含对 q、k 的逐头归一化。
+
+**[2]** Meng F, Tang P, Tang X, et al. TransMLA: Multi-Head Latent Attention Is All You Need[EB/OL]. arXiv:2502.07864, 2025. <https://arxiv.org/abs/2502.07864>
+
+把已有 GQA 模型改写成 MLA 的等价变换路线。摘要的 93% 为 92.97% 取整，指缓存压到原尺寸的 7.03%；10.6× 在 8K 上下文、输入输出等长的端到端设置下测得，未报 batch；微调 60 亿 token 恢复性能。§3.3 明确讨论 Absorb 操作，是本报告吸收路径的旁证。
+
+**[3]** Ji T, Guo B, Wu Y, et al. Towards Economical Inference: Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs[EB/OL]. arXiv:2502.14837, 2025. <https://arxiv.org/abs/2502.14837>
+
+MHA 迁移到 MLA 的微调路线，ACL 2025。partial-RoPE 按子空间 2-范数排序、保留贡献最大的前 r 个，默认 `r=d_h/16`；低秩用 `[W_k,nope, W_v]` 联合 SVD。摘要的 92.19% 是 `d_kv=64` 结构压缩叠加 Int4 量化的结果，纯结构为 68.75%；v2 摘要报 LongBench 降 1.0%，v1 报 0.5%，引用须带版本。
+
+**[4]** Ainslie J, Lee-Thorp J, de Jong Z, et al. GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints[EB/OL]. arXiv:2305.13245, 2023. <https://arxiv.org/abs/2305.13245>
+
+头共享路线，EMNLP 2023。uptraining 取原预训练步数的 5%（T5-XXL 约 600 TPUv3 chip-days），KV 组数取 8；Table 1 中 T5-XXL 推理时间 MHA 1.51 s、GQA-8 0.28 s、MQA 0.24 s，平均分 47.2、47.1、46.6。本报告 GQA-4 组按同一族实现，组数取 4。
+
+**[5]** Shazeer N. Fast Transformer Decoding: One Write-Head is All You Need[EB/OL]. arXiv:1911.02150, 2019. <https://arxiv.org/abs/1911.02150>
+
+MQA 的起点，把 decode 的瓶颈归因于反复重读 K、V 张量的内存带宽开销，主张所有查询头共享一组 K/V。本报告只把它作为头共享谱系的端点，未训练 MQA 组。
+
+**[6]** DeepSeek-AI. DeepSeek-V3 Technical Report[EB/OL]. arXiv:2412.19437, 2024. <https://arxiv.org/abs/2412.19437>
+
+沿用 V2 的 MLA 与 DeepSeekMoE。正文以符号 `d_c`、`d_h^R` 描述结构，未重复 512 与 64 的取值；可核范围内未见对 q、k 的逐头归一化。本报告只引它佐证该结构未被后续版本替换。
+
+**[7]** Su J, Lu Y, Pan S, et al. RoFormer: Enhanced Transformer with Rotary Position Embedding[EB/OL]. arXiv:2104.09864, 2021. <https://arxiv.org/abs/2104.09864>
+
+RoPE 的原始论文，以旋转矩阵编码绝对位置，并在注意力内积中显式引入相对位置依赖。本报告 2.2 的解耦 RoPE 与 4.3 的 `d_rope` 取值以此为前提。
+
+引用纪律：本报告的比值、字节数、时延与困惑度均为本机实测或按公式复算。论文数字须带基线，93.3% 相对 DeepSeek 67B、92.19% 含 4 bit 量化、10.6× 为 8K 端到端，三者都不与本项目的 3.556× 同段混用。

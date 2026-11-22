@@ -108,9 +108,9 @@ def fig_cache(data):
     x = np.arange(len(tags))
     w = 0.36
     b1 = ax2.bar(x - w / 2, raw, w, color="tab:gray", alpha=0.55,
-                 label="as-is (k written as FP32)")
+                 label="before fix (24 bit)")
     b2 = ax2.bar(x + w / 2, fixed, w, color="tab:blue", alpha=0.85,
-                 label="after RMSNorm keeps input dtype")
+                 label="after fix (16 bit)")
     for rects, vals, bs in ((b1, raw, [b[0] for b in bits]), (b2, fixed, [b[1] for b in bits])):
         for rect, v, b in zip(rects, vals, bs):
             ax2.text(rect.get_x() + rect.get_width() / 2, v + 0.35, f"{v:.2f}\n{b} bit",
@@ -119,7 +119,7 @@ def fig_cache(data):
     ax2.set_xticklabels([LABEL[t] for t in tags])
     ax2.set_ylabel("KV cache at 512 tokens (MiB)")
     ax2.set_ylim(0, max(raw) * 1.32)
-    ax2.set_title("FP32 leak in RMSNorm inflates the MHA cache by 50%")
+    ax2.set_title("Cache at 512 tokens before and after the dtype fix")
     ax2.grid(axis="y", alpha=0.25, ls=":")
     ax2.legend(loc="upper right", fontsize=7.2)
 
@@ -127,7 +127,7 @@ def fig_cache(data):
     ratio_raw = raw[0] / raw[2]
     fig.suptitle(
         f"claim 1: KV cache compression  —  measured {ratio_fixed:.2f}x "
-        f"(naive accounting without the dtype fix: {ratio_raw:.2f}x)", fontsize=9.5)
+        f"(before the dtype fix: {ratio_raw:.2f}x)", fontsize=9.5)
     fig.tight_layout()
     save("model_claim_cache.png")
 

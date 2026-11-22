@@ -103,7 +103,7 @@ def main():
     ap.add_argument("--ckpt-every", type=int, default=20_000_000)
     ap.add_argument("--grad-checkpoint", action="store_true")
     ap.add_argument("--use-qk-norm", action=argparse.BooleanOptionalAction, default=True,
-                    help="MLA 默认带 QK-Norm（DeepSeek-V2 结构）；关闭后可用吸收模式")
+                    help="MLA 默认带 QK-Norm（与 MHA 骨架一致，非 DeepSeek-V2 结构）；关闭后可用吸收模式")
     ap.add_argument("--data", default=str(ROOT / "data/tokens"))
     ap.add_argument("--out", default=None)
     ap.add_argument("--resume", default=None)
