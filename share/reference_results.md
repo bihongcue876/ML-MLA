@@ -83,7 +83,7 @@ Same layer configuration, chunked prefill with 1024-token blocks, milliseconds.
 | 192 | 224 | 4.57× | 1.235 | 1.246 |
 | 128 | 160 | 6.40× | 1.158 | 0.965 |
 
-Absorption breaks even at `d_c < (4·n_h·head_dim − n_h·d_rope)/(2·n_h − 1)`, which evaluates to 179.2 for `n_h=8, head_dim=64, d_rope=32`. The measured crossing sits between 128 and 192, consistent with the criterion in order of magnitude.
+Absorption breaks even at `d_c < (4·n_h·head_dim − n_h·d_rope)/(2·n_h − 1)`, which evaluates to 119.5 for `n_h=8, head_dim=64, d_rope=32`. The measured crossing sits between 128 and 192, i.e. slightly above the analytical value; the two agree in direction, and the formula is only an order-of-magnitude reference. (An earlier revision mis-stated 179.2, which is the value for `head_dim=96, d_rope=48`.)
 
 ## `n_heads` sweep
 
