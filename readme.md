@@ -1,8 +1,8 @@
-# 关于 MLA 机制效果的小体量复现探索
+# 关于 MLA 机制效果的小体量复现、机理分析与优化实践
 
-单卡 6 GB 显存下，用 64M 级模型与单层基准，检验 MLA（Multi-head Latent Attention）的两项机制性质：KV cache 的压缩比，以及吸收式推理相对朴素实现的时延代价。不复现 DeepSeek-V2 的训练配方，困惑度只作同预算下的质量参照。
+单卡 6 GB 显存下，用 64M 级模型与单层基准，检验 MLA（Multi-head Latent Attention）的机制性质与适用边界：KV cache 的压缩比及其参照系、吸收式推理相对朴素实现的时延代价，以及小规模实现下质量代价的成因与针对性改进。不复现 DeepSeek-V2 的训练配方，困惑度只作同预算下的质量参照。
 
-不看代码、只想看结论的读者请直接跳转 [公共报告](share/public_report.md)。
+仅需结论而不读代码的读者，可直接参阅 [公共报告](share/public_report.md)。
 
 ## 项目概述
 
@@ -12,7 +12,7 @@
 
 **层级（`LayerTest/`）**：自建 MHA、朴素 MLA、吸收 MLA 三层，参数名与形状一致，共用同一套 SDPA 与掩码逻辑。测每 token 的 KV cache 元素数、prefill 分块延迟、decode 单步延迟、峰值显存，并扫 `d_c` 与 `n_heads`，给出吸收相对朴素实现的盈亏边界。
 
-两条路线都只测 batch = 1，因此不回答「吸收在服务端是否更划算」：吸收的收益要靠缓存密度换批量吞吐，此处未测。
+两条路线都只测 batch = 1，因此不回答「吸收在服务端是否更划算」：其收益依赖以缓存密度换取批量吞吐，本轮未测。
 
 ### 一条轴上的三种骨架：MHA、GQA、MQA
 
@@ -25,7 +25,7 @@ MHA、GQA、MQA 不是三套结构，而是同一个族的三个取值，统称�
 | MQA | 1 | 192 | 60,373,248 | 否 |
 | MLA | 不适用 | 432 | 68,925,696 | 是 |
 
-因此代码里没有独立的 MHA 与 MQA 模型文件：`MLATrain/model_gqa.py` 的 `GQAAttention` 与 `GQAModel` 就是这条轴的唯一实现。跑 MHA 用 `--arch mha`（内部把 `n_kv_heads` 设成 8），跑 MQA 在 `build_model` 里把该值设成 1 即可，不需要新增文件；`python MLATrain/train.py --help` 的 `--arch` 说明里也写了这一点。表中 MQA 的参数量按同一公式外推，不是实测。
+因此代码里没有独立的 MHA 与 MQA 模型文件：`MLATrain/model_gqa.py` 的 `GQAAttention` 与 `GQAModel` 就是这条轴的唯一实现。跑 MHA 用 `--arch mha`（内部将 `n_kv_heads` 设为 8）；跑 MQA 时在 `build_model` 中将该值设为 1，无需新增文件；`python MLATrain/train.py --help` 的 `--arch` 说明里也写了这一点。表中 MQA 的参数量按同一公式外推，不是实测。
 
 MLA 不属于这个族。它每头保留独立查询，压缩的不是 KV 组数而是 KV 的维度：每头压成 384 维潜在向量加 48 维解耦 RoPE，每层每 token 432 元素，数量介于 GQA-4 与 MQA 之间，但机制与共享无关。代价是解码时要把 `W_UK` 与 `W_Q` 分别吸收进权重，且该吸收与 QK-Norm 冲突（见 [操作手册](guide.md)）。
 
@@ -83,7 +83,7 @@ uv sync
 .venv/bin/python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 ```
 
-**五步复现**（单次训练约 2–2.7 小时，可夜间跑）：
+**五步复现**（单次训练约 2–2.7 小时，适合夜间执行）：
 
 ```bash
 # 1. 自检：结构与数值检查，不训练，CPU 上几十秒
@@ -121,11 +121,11 @@ python scripts/model/plot_diagrams.py    # assets/ 下两张示意图，不含�
 
 ![实验流程](assets/flow.png)
 
-模型级与层级两条路各自汇总后合流：前者写 `data/results/model/`，后者写 `data/results/layer/`。所有汇总表都只从原始 jsonl 生成，重跑脚本不覆盖原始记录。
+模型级与层级两条路线各自汇总后汇合：前者写 `data/results/model/`，后者写 `data/results/layer/`。所有汇总表都只从原始 jsonl 生成，重跑脚本不覆盖原始记录。
 
 ## 一键流水线
 
-`run_all.py` 串起检查、切分、训练、评测、层基准、汇总与出图。
+`run_all.py` 依序执行检查、切分、训练、评测、层基准、汇总与出图。
 
 ```bash
 python run_all.py                       # 全流程
@@ -136,7 +136,7 @@ python run_all.py --dry-run             # 只打印将执行的命令
 
 默认跑三组骨架 `mha`、`gqa4`、`mla`，两个 seed 共 6 个 run。`mla` 默认带 QK-Norm，产物写入 `models/mla_qknorm/`；已有 run 在 `--skip-existing`（默认开启）下跳过。
 
-训练默认 `--batch 8 --grad-accum 2`，等效每步 8192 token，适配 6 GB 卡并默认开启梯度检查点。若仍报 `CUDA out of memory`，按顺序降 `--batch 4 --grad-accum 4`、`--seq-len 256`。
+训练默认 `--batch 8 --grad-accum 2`，等效每步 8192 token，适配 6 GB 卡并默认开启梯度检查点。若出现 `CUDA out of memory`，可依次降低为 `--batch 4 --grad-accum 4`、`--seq-len 256`。
 
 日志写入 `data/logs/run-logs/<时间戳>/`：`master.log` 记全部子进程输出，`errors.log` 记失败阶段与末 80 行，`status.json` 记各阶段起止与返回码。训练期间的监控图刷新到 `data/logs/live/live_training.png`。
 
@@ -167,7 +167,7 @@ python run_all.py --dry-run             # 只打印将执行的命令
 
 1. 结果数字只由脚本从 `data/runs/` 与 `models/*/*/*.jsonl` 汇总，不手写。
 2. 两配置差值小于 seed 极差时，结论写成「未观测到显著差异」。
-3. 时延对 GPU 时钟敏感。本轮锁频未生效（`nvidia-smi -lgc` 返回权限不足，实测 SM 时钟约 2310 MHz 且随负载浮动），同一检查点两次测量可差 5.8%，因此架构间时延改用 `eval_paired.py` 在同一进程内交替测量并只取配对差值；绝对毫秒数跨时段不可比。
+3. 时延对 GPU 时钟敏感。本轮锁频未生效（`nvidia-smi -lgc` 返回权限不足，实测 SM 时钟约 2310 MHz 且随负载浮动），同一检查点两次测量可差 5.8%，因此模型级架构间时延改用 `eval_paired.py` 在同一进程内交替测量并只取配对差值；绝对毫秒数跨时段不可比。
 
 ## 文档
 
