@@ -1,0 +1,110 @@
+{
+  "generated_at_utc": "2026-11-20T06:52:18.109379+00:00",
+  "mode": "offline_reanalysis_of_retained_results_no_gpu",
+  "historical_gpu": "RTX 4050 Laptop GPU",
+  "local_analysis_env": "CPU-only offline analysis; no GPU measurements performed",
+  "layer_run_count": 11,
+  "layer_measurement_rows": 222,
+  "inputs": [
+    {
+      "path": "data/results/model/tables/cache_bench.json",
+      "sha256": "057821e4351ef4eee86ff75c5412629554a0e2c8285a59172352395fbb2958fe"
+    },
+    {
+      "path": "data/results/model/tables/train_runs.csv",
+      "sha256": "b4f8afd017e58353e54030d29235cbfef7afdfdb67a8c3c39c6b12e099f735a9"
+    },
+    {
+      "path": "data/runs/layer_20261117_103743/bench.jsonl",
+      "sha256": "b78cb3e70537f6d1c5ce266340c5b4ac836339b4fa129d4fb17418fef3852b54"
+    },
+    {
+      "path": "data/runs/layer_20261117_103743/config.json",
+      "sha256": "3c8b61f408b4d4614d2fa7cb3e7a619056a05d7351eeacb337fc2e17b5968822"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_104815/bench.jsonl",
+      "sha256": "e6b19260fecdbe778ace3dbfe1cf7474eae4f1682a1b350cd54bb642088899d2"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_104815/config.json",
+      "sha256": "90fef3c33a62504f2180c6299b0c6f5f0effeb94494100e1e7578d533a58ca4f"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_104858/bench.jsonl",
+      "sha256": "81c2cf803cb76e7aa038c93528e5c14ef6bfd52c58aaed4d3b81139624c84f00"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_104858/config.json",
+      "sha256": "a0a30662def899bc70d99e9ca41534871d2d0f9e776c3e10bf18383447b598d2"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_112512/bench.jsonl",
+      "sha256": "645ac3420d903edf99e32d3267a3495abba6ab790fcccc540f25df8cb72d584d"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_112512/config.json",
+      "sha256": "94a72db257bc4a0d61ca1b03e53c63293f305ad8e4be277b304eddc07bcfe2a1"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_112521/bench.jsonl",
+      "sha256": "b501fbb1f18908c0ab00e12f8edf990e0e174b52360417bda0c0517b1c8c0e9a"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_112521/config.json",
+      "sha256": "59fe90f45a288fbd88bdcaea5a7fdf3d092cde3b29c411cc965428cd7d53bba2"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_112534/bench.jsonl",
+      "sha256": "44d1f7dac68a13c512e4b1983c51155ab43dbebdf0f3fb27f1588e0da63d8223"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_112534/config.json",
+      "sha256": "629de374b1d0df59d7cf942b4d9821ea767b859c3b92fe3707df2668ca855391"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124423/bench.jsonl",
+      "sha256": "075430f558d6f94ef153346457ed127eff8f7ec45ea422a8856ba48a3dd87ff8"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124423/config.json",
+      "sha256": "8197141985e497f4cd0c6d4da839d3fa08db97e3844d37e0863cca747771728b"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124433/bench.jsonl",
+      "sha256": "3f342908343f9a56019885cbee47f13441fc7c188fd1c6ecdfc8dea1326ae0d4"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124433/config.json",
+      "sha256": "e1f44a464aa34be32e1845cb7e46839be9632b86a5c43ec22e43c2d3b6f7978d"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124443/bench.jsonl",
+      "sha256": "e7e0d2e99d897cef2797782cbdf1fe16e380407c83b46b470ebd9ecc13ff6a14"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124443/config.json",
+      "sha256": "c68773abfef6a2e195683851503624f05fd3f947505854a27bff8a8fcf3ccba3"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124452/bench.jsonl",
+      "sha256": "232161b07a7b738bd1c3f355b89d978feabc47b35c33f5fd13e32d88f4347a79"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124452/config.json",
+      "sha256": "17503b7cc2a3c7b615b675d9a8383cc8dd732b60a9fe4902526abcfdc441c253"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124647/bench.jsonl",
+      "sha256": "17bfea41f84b49e2d414dc3fa5f0e2da53ed9f3dd3984f737cb392d015e22668"
+    },
+    {
+      "path": "data/runs/layerctx_20261118_124647/config.json",
+      "sha256": "6fef41cd5ed462d1731fde5a3aacc49530d1170ac173882fe79da326fb717f5a"
+    },
+    {
+      "path": "share/zhangjun005/build_evidence.py",
+      "sha256": "7cdde91ca3ce00886ca7ad116d76b4f37ea5e76e3ebb1ae8f201c6cf8298050b"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+﻿arch,seeds,val_ppl_mean,val_ppl_range,val_pct_vs_mha,train_tokens_per_s_mean,accumulated_step_hours_mean,source
+MHA,42;43,9.140149999999998,0.03110000000000035,0.0,17119.050000000003,2.4355,data/results/model/tables/train_runs.csv
+GQA-4,42;43,9.28065,0.09309999999999974,1.5371738975837435,19275.75,2.163,data/results/model/tables/train_runs.csv
+MLA,42;43,10.436800000000002,0.24760000000000026,14.186309852682989,15247.75,2.7335000000000003,data/results/model/tables/train_runs.csv
